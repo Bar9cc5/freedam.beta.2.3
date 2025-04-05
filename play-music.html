@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="play-music.css">
+    <title>Угадай исполнителя: Rock</title>
+</head>
+<body>
+    <!-- Шапка -->
+    <div class="header">
+        <h1><span>F</span>reedam</h1>
+        <a href="play-main.html" class="back-btn">← Назад</a>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="quiz-container" id="quiz-container">
+        <h2 id="quiz-title">Угадай исполнителя: Rock</h2>
+        
+        <div class="score">Счёт: <span id="score">0</span>/<span id="total">0</span></div>
+        
+        <div class="player-container">
+            <div class="song-info" id="song-info">Сейчас играет: <span id="current-song-title"></span></div>
+            <audio id="audio-player"></audio>
+            <div class="player-controls">
+                <button class="play-pause-btn" id="play-pause-btn">▶</button>
+                <div class="progress-container" id="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <div class="time-display" id="time-display">0:00</div>
+            </div>
+        </div>
+        
+        <div class="result" id="result"></div>
+        
+        <div class="options" id="options">
+            <!-- Варианты ответов будут здесь -->
+        </div>
+        
+        <div class="action-buttons">
+            <button class="play-btn next-btn" id="next-btn" style="display: none;">Следующий вопрос</button>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-title">Социальные сети</div>
+                <div class="social-links">
+                    <a href="#" class="social-link">ТГ</a>
+                    <a href="#" class="social-link">ВК</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <div class="footer-title">Меню</div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">О нас</a>
+                    <a href="#" class="footer-link">Правила</a>
+                    <a href="#" class="footer-link">Контакты</a>
+                    <a href="#" class="footer-link">Помощь</a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                © 2025 Freedam. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // База данных песен с локальными аудиофайлами
+        const songsDatabase = [
+            { 
+                title: "Штиль", 
+                artist: "Ария", 
+                album: "Химера",
+                preview: "aria-shtil.mp3" 
+            },
+            { 
+                title: "Boulevard Of Broken Dreams", 
+                artist: "Green Day", 
+                album: "Oh Love",
+                preview: "greenday-boulevard.mp3" 
+            },
+            { 
+                title: "Master Of Puppets", 
+                artist: "Metallica", 
+                album: "Master Of Puppets",
+                preview: "metallica-master.mp3" 
+            },
+            { 
+                title: "Bohemian Rhapsody", 
+                artist: "Queen", 
+                album: "A Night At The Opera",
+                preview: "queen-bohemian.mp3" 
+            },
+            { 
+                title: "Sonne", 
+                artist: "Rammstein", 
+                album: "Made in Germany 1995-2011",
+                preview: "rammstein-sonne.mp3" 
+            }
+        ];
+    
+        let currentSongs = [...songsDatabase];
+        let currentSongIndex = 0;
+        let score = 0;
+        let isPlaying = false;
+
+        // DOM элементы
+        const quizTitle = document.getElementById('quiz-title');
+        const audioPlayer = document.getElementById('audio-player');
+        const optionsContainer = document.getElementById('options');
+        const resultDisplay = document.getElementById('result');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreDisplay = document.getElementById('score');
+        const totalDisplay = document.getElementById('total');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const timeDisplay = document.getElementById('time-display');
+        const songTitleDisplay = document.getElementById('current-song-title');
+
+        // Инициализация игры
+        function initGame() {
+            shuffleArray(currentSongs);
+            currentSongIndex = 0;
+            score = 0;
+            scoreDisplay.textContent = score;
+            totalDisplay.textContent = currentSongs.length;
+            loadQuestion();
+        }
+
+        // Загрузка вопроса
+        function loadQuestion() {
+            if (currentSongIndex >= currentSongs.length) {
+                endGame();
+                return;
+            }
+
+            const currentSong = currentSongs[currentSongIndex];
+            audioPlayer.src = currentSong.preview;
+            songTitleDisplay.textContent = currentSong.title;
+            
+            // Создаем массив всех исполнителей
+            const allArtists = [...new Set(currentSongs.map(song => song.artist))];
+            // Удаляем текущего исполнителя
+            const wrongArtists = allArtists.filter(artist => artist !== currentSong.artist);
+            // Выбираем 3 случайных неверных ответа
+            const shuffled = shuffleArray([...wrongArtists]).slice(0, 3);
+            // Создаем массив вариантов ответов
+            const options = [...shuffled, currentSong.artist];
+            // Перемешиваем варианты
+            shuffleArray(options);
+
+            // Очищаем контейнер с вариантами
+            optionsContainer.innerHTML = '';
+            
+            // Создаем кнопки вариантов ответов
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option, currentSong.artist);
+                optionsContainer.appendChild(button);
+            });
+
+            // Сбрасываем состояние
+            resultDisplay.textContent = '';
+            resultDisplay.className = 'result';
+            nextBtn.style.display = 'none';
+            progressBar.style.width = '0%';
+            timeDisplay.textContent = '0:00';
+            isPlaying = false;
+            playPauseBtn.textContent = '▶';
+        }
+
+        // Проверка ответа
+        function checkAnswer(selectedOption, correctAnswer) {
+            const optionButtons = document.querySelectorAll('.option-btn');
+            let isCorrect = false;
+
+            optionButtons.forEach(button => {
+                button.disabled = true;
+                
+                if (button.textContent === correctAnswer) {
+                    button.classList.add('correct');
+                    if (button.textContent === selectedOption) {
+                        isCorrect = true;
+                        score++;
+                        scoreDisplay.textContent = score;
+                    }
+                }
+                
+                if (button.textContent === selectedOption && button.textContent !== correctAnswer) {
+                    button.classList.add('wrong');
+                }
+            });
+
+            if (isCorrect) {
+                resultDisplay.textContent = 'Правильно!';
+                resultDisplay.style.backgroundColor = '#4caf50';
+            } else {
+                resultDisplay.textContent = `Неверно! Правильный ответ: ${correctAnswer}`;
+                resultDisplay.style.backgroundColor = '#f44336';
+            }
+
+            nextBtn.style.display = 'block';
+        }
+
+        // Завершение игры
+        function endGame() {
+            quizTitle.textContent = 'Игра окончена!';
+            optionsContainer.innerHTML = '';
+            resultDisplay.textContent = `Ваш результат: ${score} из ${currentSongs.length}`;
+            resultDisplay.style.backgroundColor = '#a74aff';
+            nextBtn.style.display = 'none';
+            audioPlayer.pause();
+            isPlaying = false;
+            playPauseBtn.textContent = '▶';
+        }
+
+        // Перемешивание массива
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Обработчики событий
+        nextBtn.addEventListener('click', () => {
+            currentSongIndex++;
+            loadQuestion();
+        });
+
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playPauseBtn.textContent = '▶';
+            } else {
+                audioPlayer.play().catch(e => console.error("Ошибка воспроизведения:", e));
+                playPauseBtn.textContent = '❚❚';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            const currentTime = audioPlayer.currentTime;
+            const duration = audioPlayer.duration || 1;
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            
+            // Форматирование времени
+            const minutes = Math.floor(currentTime / 60);
+            const seconds = Math.floor(currentTime % 60).toString().padStart(2, '0');
+            timeDisplay.textContent = `${minutes}:${seconds}`;
+        });
+
+        progressContainer.addEventListener('click', (e) => {
+            const width = progressContainer.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            
+            audioPlayer.currentTime = (clickX / width) * duration;
+        });
+
+        audioPlayer.addEventListener('ended', () => {
+            isPlaying = false;
+            playPauseBtn.textContent = '▶';
+            progressBar.style.width = '0%';
+            timeDisplay.textContent = '0:00';
+        });
+
+        // Запуск игры
+        initGame();
+    </script>
+</body>
+</html>

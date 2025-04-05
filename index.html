@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Регистрация в Freedam</title>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <div class="logo">
+            <h1>Freedam</h1>
+            <p>Присоединяйтесь к новой эре социальных сетей</p>
+        </div>
+        
+        <form id="registrationForm">
+            <div class="name-fields">
+                <div class="form-group">
+                    <label for="firstName">Имя</label>
+                    <input type="text" id="firstName" placeholder="Введите ваше имя" required>
+                    <div id="firstNameError" class="error">Пожалуйста, введите ваше имя</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Фамилия</label>
+                    <input type="text" id="lastName" placeholder="Введите вашу фамилию" required>
+                    <div id="lastNameError" class="error">Пожалуйста, введите вашу фамилию</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Номер телефона</label>
+                <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+                <div id="phoneError" class="error">Пожалуйста, введите корректный номер телефона</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" placeholder="Не менее 6 символов" required>
+                <div id="passwordError" class="error">Пароль должен содержать не менее 6 символов</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Повторите пароль</label>
+                <input type="password" id="confirmPassword" placeholder="Повторите ваш пароль" required>
+                <div id="confirmError" class="error">Пароли не совпадают</div>
+            </div>
+            
+            <button type="submit" class="btn">Далее</button>
+        </form>
+        
+        <div class="login-link">
+            Уже есть аккаунт? <a href="#">Войти</a>
+        </div>
+    </div>
+
+    <script>
+        // Генерация уникального ID пользователя
+        function generateUserId() {
+            return '@' + Math.floor(10000000 + Math.random() * 90000000); // Генерирует ID вида @12345678
+        }
+
+        // Создание падающих звезд
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 30;
+            
+            starsContainer.innerHTML = '';
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 10;
+                const duration = Math.random() * 15 + 5;
+                const opacity = Math.random() * 0.7 + 0.3;
+                const hue = Math.random() * 60 + 200;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${posX}%`;
+                star.style.top = `-10px`;
+                star.style.animation = `falling ${duration}s linear ${delay}s infinite`;
+                star.style.opacity = opacity;
+                star.style.background = `hsla(${hue}, 100%, 80%, ${opacity})`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Маска для телефона
+        document.getElementById('phone').addEventListener('input', function(e) {
+            const input = e.target;
+            const cursorPosition = input.selectionStart;
+            let numbers = input.value.replace(/\D/g, '');
+            
+            // Ограничиваем длину номера
+            if (numbers.length > 11) {
+                numbers = numbers.substring(0, 11);
+            }
+            
+            let formatted = '';
+            if (numbers.length > 0) {
+                formatted = '+' + numbers.substring(0, 1);
+                if (numbers.length > 1) {
+                    formatted += ' (' + numbers.substring(1, 4);
+                }
+                if (numbers.length > 4) {
+                    formatted += ') ' + numbers.substring(4, 7);
+                }
+                if (numbers.length > 7) {
+                    formatted += '-' + numbers.substring(7, 9);
+                }
+                if (numbers.length > 9) {
+                    formatted += '-' + numbers.substring(9, 11);
+                }
+            }
+            
+            input.value = formatted;
+            
+            // Восстанавливаем позицию курсора
+            const diff = formatted.length - input.value.length;
+            input.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
+        });
+
+        // Обработка формы регистрации
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const phone = document.getElementById('phone').value.replace(/\D/g, '');
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Сбрасываем сообщения об ошибках
+            document.querySelectorAll('.error').forEach(el => el.style.display = 'none');
+            
+            // Валидация
+            let isValid = true;
+            
+            if (!firstName) {
+                document.getElementById('firstNameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!lastName) {
+                document.getElementById('lastNameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!phone || phone.length !== 11) {
+                document.getElementById('phoneError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!password || password.length < 6) {
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (password !== confirmPassword) {
+                document.getElementById('confirmError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Генерируем уникальный ID
+                const userId = generateUserId();
+                
+                // Создаем объект пользователя
+                const userData = {
+                    id: userId,
+                    firstName: firstName,
+                    lastName: lastName,
+                    fullName: `${firstName} ${lastName}`,
+                    phone: phone,
+                    password: password,
+                    registered: true,
+                    registrationDate: new Date().toISOString(),
+                    // Дополнительные поля по умолчанию
+                    avatar: 'avatar.jpg',
+                    cover: '',
+                    friends: [],
+                    followers: [],
+                    posts: [],
+                    photos: [],
+                    interests: [],
+                    status: 'online'
+                };
+                
+                // Сохраняем данные пользователя
+                localStorage.setItem('currentUser', JSON.stringify(userData));
+                
+                // Сохраняем в список пользователей
+                let users = JSON.parse(localStorage.getItem('users') || '[]');
+                users.push(userData);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Перенаправляем на страницу профиля
+                window.location.href = 'main.html';
+            }
+        });
+        
+        // Инициализация при загрузке
+        window.addEventListener('load', function() {
+            createStars();
+            
+            // Проверяем, есть ли сохраненные данные
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                const userData = JSON.parse(savedUser);
+                if (userData.registered) {
+                    window.location.href = 'main.html';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="play-main.css">
+    <title>Угадай исполнителя по песне</title>
+</head>
+<body>
+    <!-- Новая шапка -->
+    <div class="header">
+        <h1><span>F</span>reedam</h1>
+        <a href="index.html" class="back-btn">Назад</a>
+    </div>
+
+    <div class="container" id="main-menu">
+        <header>
+            <h1>Угадай исполнителя по песне</h1>
+            <p>Выбери жанр и проверь свои музыкальные знания!</p>
+        </header>
+
+        <div class="genre-grid">
+            <div class="genre-card" data-genre="pop">
+                <img src="pop-icon.png.png" class="genre-icon" alt="Pop">
+                <h2>Pop</h2>
+                <p>Поп-музыка со всего мира</p>
+            </div>
+
+            <div class="genre-card" data-genre="rock">
+                <img src="rock-icon.png.png" class="genre-icon" alt="Rock">
+                <h2>Rock</h2>
+                <p>Классический и современный рок</p>
+            </div>
+
+            <div class="genre-card" data-genre="rap">
+                <img src="rap-icon.png.png" class="genre-icon" alt="Rap">
+                <h2>Rap</h2>
+                <p>Хип-хоп и рэп исполнители</p>
+            </div>
+
+            <div class="genre-card" data-genre="kpop">
+                <img src="kpop-icon.png.png" class="genre-icon" alt="K-Pop">
+                <h2>K-Pop</h2>
+                <p>Корейские поп-группы</p>
+            </div>
+
+            <div class="genre-card" data-genre="rb">
+                <img src="rb-icon.png.png" class="genre-icon" alt="R&B">
+                <h2>R&B</h2>
+                <p>Ритм-н-блюз и соул</p>
+            </div>
+
+            <div class="genre-card" data-genre="dance">
+                <img src="dance-icon.png.png" class="genre-icon" alt="Dance">
+                <h2>Dance</h2>
+                <p>Электронная танцевальная музыка</p>
+            </div>
+        </div>
+
+        <a href="#" class="play-btn" id="play-btn">Выберите жанр</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectedGenre = null;
+            const genreCards = document.querySelectorAll('.genre-card');
+            const playBtn = document.getElementById('play-btn');
+
+            // Обработка выбора жанра
+            genreCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Убираем выделение со всех карточек
+                    genreCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Выделяем выбранную карточку
+                    this.classList.add('selected');
+                    selectedGenre = this.getAttribute('data-genre');
+                    
+                    // Обновляем текст кнопки
+                    const genreName = this.querySelector('h2').textContent;
+                    playBtn.textContent = `Играть: ${genreName}`;
+                });
+            });
+
+            // Обработка нажатия кнопки "Играть"
+            playBtn.addEventListener('click', function(e) {
+                if (!selectedGenre) {
+                    e.preventDefault();
+                    alert('Пожалуйста, выберите жанр!');
+                    return;
+                }
+
+                // Пока перенаправляем только на рок, остальные жанры можно добавить позже
+                if (selectedGenre === 'rock') {
+                    window.location.href = 'play-music.html?genre=rock';
+                } else {
+                    e.preventDefault();
+                    alert('Этот жанр пока недоступен. Выберите Rock для игры.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

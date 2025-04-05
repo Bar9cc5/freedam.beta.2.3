@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freedam - Социальная сеть</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Эффект частиц -->
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <div class="container">
+            <div class="mobile-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="#" class="logo">
+                    <div class="logo-icon neon-text">F</div>
+                    <span>Freedam</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar" id="navbar">
+        <a href="#profile" class="nav-item" data-section="profile-section">
+            <i class="fas fa-user icon"></i>
+            <span class="label">Профиль</span>
+        </a>
+        <a href="#feed" class="nav-item active" data-section="feed-section">
+            <i class="fas fa-home icon"></i>
+            <span class="label">Главная</span>
+        </a>
+        <a href="#messenger" class="nav-item" data-section="messenger-section">
+            <i class="fas fa-comment-dots icon"></i>
+            <span class="label">Мессенджер</span>
+        </a>
+        <a href="#friends" class="nav-item" data-section="friends-section">
+            <i class="fas fa-users icon"></i>
+            <span class="label">Друзья</span>
+        </a>
+        <a href="#communities" class="nav-item" data-section="communities-section">
+            <i class="fas fa-users-between-lines icon"></i>
+            <span class="label">Сообщества</span>
+        </a>
+        <a href="#photos" class="nav-item" data-section="photos-section">
+            <i class="fas fa-images icon"></i>
+            <span class="label">Фотографии</span>
+        </a>
+        <a href="#videos" class="nav-item" data-section="videos-section">
+            <i class="fas fa-video icon"></i>
+            <span class="label">Видео</span>
+        </a>
+        <a href="#games" class="nav-item" data-section="games-section">
+            <i class="fas fa-gamepad icon"></i>
+            <span class="label">Игры</span>
+        </a>
+    </nav>
+
+    <main class="main-content">
+        <!-- Секция профиля (изначально скрыта) -->
+        <section class="content-section" id="profile-section" style="display: none;">
+            <section class="profile-section" id="profile-section">
+                <!-- Шапка профиля -->
+                <div class="profile-header">
+                  <div class="cover-photo" id="cover-photo">
+                    <div class="edit-cover" id="edit-cover">
+                      <i class="fas fa-camera"></i> Изменить обложку
+                      <input type="file" id="cover-upload" accept="image/*" style="display: none;">
+                    </div>
+                  </div>
+                  <div class="profile-info">
+                    <div class="avatar-container">
+                      <img src="avatar.jpg" alt="Аватар" class="profile-avatar" id="profile-avatar">
+                      <button class="edit-avatar" id="edit-avatar"><i class="fas fa-camera"></i>
+                        <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                      </button>
+                    </div>
+                    <div class="profile-details">
+                      <h1 class="profile-name" id="profile-name">Илья</h1>
+                      <p class="profile-id" id="profile-id"></p>
+                      <p class="profile-status">Online</p>
+                      <div class="profile-stats">
+                        <div class="stat-item">
+                          <span class="stat-number" id="friends-count">0</span>
+                          <span class="stat-label">друзей</span>
+                        </div>
+                        <div class="stat-item">
+                          <span class="stat-number" id="followers-count">0</span>
+                          <span class="stat-label">подписчиков</span>
+                        </div>
+                        <div class="stat-item">
+                          <span class="stat-number" id="photos-count">0</span>
+                          <span class="stat-label">фото</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="profile-actions" id="profile-actions">
+                      <button class="action-button primary" id="edit-profile">
+                        <i class="fas fa-pencil-alt"></i> Редактировать
+                      </button>
+                      <button class="action-button" id="settings-button">
+                        <i class="fas fa-cog"></i> Настройки
+                      </button>
+                      <!-- Кнопки для чужого профиля -->
+                      <button class="action-button" id="add-friend" style="display: none;">
+                        <i class="fas fa-user-plus"></i> Добавить в друзья
+                      </button>
+                      <button class="action-button" id="follow-user" style="display: none;">
+                        <i class="fas fa-rss"></i> Подписаться
+                      </button>
+                    </div>
+                  </div>
+                </div>
+            
+                <!-- Основное содержимое профиля -->
+                <div class="profile-content">
+                    <!-- Боковая панель -->
+                    <aside class="profile-sidebar">
+                        <!-- Информация о пользователе -->
+                        <div class="sidebar-section">
+                            <h3 class="sidebar-title">Информация</h3>
+                            <ul class="info-list" id="user-info">
+                                <li><i class="fas fa-birthday-cake"></i> Дата рождения: <span id="birthday">15 сентября 2009</span></li>
+                                <li><i class="fas fa-map-marker-alt"></i> Город: <span id="city">Москва</span></li>
+                                <li><i class="fas fa-graduation-cap"></i> Образование: <span id="education">среднее</span></li>
+                                <li><i class="fas fa-briefcase"></i> Работа: <span id="job">Веб-разработчик</span></li>
+                                <li><i class="fas fa-heart"></i> Семейное положение: <span id="relationship">Встречаюсь</span></li>
+                            </ul>
+                            <button class="edit-info" id="edit-info-btn">
+                                <i class="fas fa-pencil-alt"></i> Редактировать
+                            </button>
+                        </div>
+            
+                        <!-- Интересы -->
+                        <div class="sidebar-section">
+                            <h3 class="sidebar-title">Интересы</h3>
+                            <div class="interests-tags" id="interests-tags">
+                                <span class="tag">Программирование</span>
+                                <span class="tag">Музыка</span>
+                                <span class="tag">Путешествия</span>
+                                <span class="tag">Фотография</span>
+                            </div>
+                            <button class="edit-interests" id="add-interest-btn">
+                                <i class="fas fa-plus"></i> Добавить
+                            </button>
+                        </div>
+            
+                        <!-- Фотографии -->
+                        <div class="sidebar-section">
+                            <h3 class="sidebar-title">Фотографии</h3>
+                            <div class="photos-grid" id="photos-grid">
+                                <!-- Фото будут добавляться динамически -->
+                            </div>
+                            <button class="view-all" id="view-all-photos">
+                                <i class="fas fa-images"></i> Показать все
+                            </button>
+                        </div>
+                    </aside>
+            
+                    <!-- Основная часть -->
+                    <main class="profile-main">
+                        <!-- Создание поста -->
+                        <div class="create-post">
+                            <div class="post-input-container">
+                                <img src="avatar.jpg" alt="Аватар" class="post-avatar" id="post-avatar">
+                                <input type="text" placeholder="Что у вас нового?" class="post-input" id="post-input">
+                            </div>
+                            <div class="post-actions">
+                                <button class="post-action" id="add-photo-btn">
+                                    <i class="fas fa-image"></i> Фото
+                                    <input type="file" id="photo-upload" accept="image/*" style="display: none;" multiple>
+                                </button>
+                                <button class="post-action" id="add-video-btn">
+                                    <i class="fas fa-video"></i> Видео
+                                </button>
+                                <button class="post-action" id="add-music-btn">
+                                    <i class="fas fa-music"></i> Музыка
+                                </button>
+                                <button class="post-action" id="add-poll-btn">
+                                    <i class="fas fa-poll"></i> Опрос
+                                </button>
+                                <button class="post-submit" id="submit-post-btn" disabled>
+                                    <i class="fas fa-paper-plane"></i> Опубликовать
+                                </button>
+                            </div>
+                        </div>
+            
+                        <!-- Лента постов -->
+                        <div class="posts-container" id="posts-container">
+                            <!-- Посты будут добавляться динамически -->
+                        </div>
+                    </main>
+                </div>
+            
+                <!-- Модальные окна -->
+                <!-- Модальное окно редактирования информации -->
+                <div class="modal" id="info-modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h3>Редактировать информацию</h3>
+                        <form id="info-form">
+                            <div class="form-group">
+                                <label for="edit-name">Имя:</label>
+                                <input type="text" id="edit-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-birthday">Дата рождения:</label>
+                                <input type="date" id="edit-birthday">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-city">Город:</label>
+                                <input type="text" id="edit-city">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-education">Образование:</label>
+                                <select id="edit-education">
+                                    <option value="среднее">Среднее</option>
+                                    <option value="среднее специальное">Среднее специальное</option>
+                                    <option value="неоконченное высшее">Неоконченное высшее</option>
+                                    <option value="высшее">Высшее</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-job">Работа:</label>
+                                <input type="text" id="edit-job">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-relationship">Семейное положение:</label>
+                                <select id="edit-relationship">
+                                    <option value="Не указано">Не указано</option>
+                                    <option value="Не женат/Не замужем">Не женат/Не замужем</option>
+                                    <option value="Встречаюсь">Встречаюсь</option>
+                                    <option value="Помолвлен(а)">Помолвлен(а)</option>
+                                    <option value="Женат/Замужем">Женат/Замужем</option>
+                                </select>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="button" class="cancel-btn" id="cancel-info-edit">
+                                    <i class="fas fa-times"></i> Отмена
+                                </button>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i> Сохранить
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+                <!-- Модальное окно добавления интересов -->
+                <div class="modal" id="interest-modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h3>Добавить интерес</h3>
+                        <form id="interest-form">
+                            <div class="form-group">
+                                <input type="text" id="new-interest" placeholder="Введите интерес" required>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="button" class="cancel-btn" id="cancel-interest">
+                                    <i class="fas fa-times"></i> Отмена
+                                </button>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-plus"></i> Добавить
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+                <!-- Модальное окно настроек -->
+                <div class="modal" id="settings-modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h3>Настройки профиля</h3>
+                        <form id="settings-form">
+                            <div class="form-group">
+                                <label for="settings-email">Email:</label>
+                                <input type="email" id="settings-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-password">Новый пароль:</label>
+                                <input type="password" id="settings-password" placeholder="Оставьте пустым, если не хотите менять">
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-confirm-password">Подтвердите пароль:</label>
+                                <input type="password" id="settings-confirm-password">
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-visibility">Видимость профиля:</label>
+                                <select id="settings-visibility">
+                                    <option value="public">Публичный</option>
+                                    <option value="friends">Только друзья</option>
+                                    <option value="private">Приватный</option>
+                                </select>
+                            </div>
+                            <div class="form-buttons">
+                                <button type="button" class="cancel-btn" id="cancel-settings">
+                                    <i class="fas fa-times"></i> Отмена
+                                </button>
+                                <button type="submit" class="save-btn">
+                                    <i class="fas fa-save"></i> Сохранить
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            
+            <script>
+                // Глобальные переменные
+                let users = [
+                  {
+                    id: '@12313133',
+                    name: 'Илья',
+                    birthday: '15 сентября 2009',
+                    city: 'Москва',
+                    education: 'среднее',
+                    job: 'Веб-разработчик',
+                    relationship: 'Встречаюсь',
+                    interests: ['Программирование', 'Музыка', 'Путешествия', 'Фотография'],
+                    friends: [],
+                    followers: [],
+                    photos: 0,
+                    email: '',
+                    password: '',
+                    visibility: 'public',
+                    avatar: 'avatar.jpg',
+                    cover: ''
+                  },
+                  {
+                    id: '@45678901',
+                    name: 'Анна',
+                    friends: [],
+                    followers: [],
+                    avatar: 'user2.jpg'
+                  }
+                ];
+                
+                let currentUser = users[0]; // Текущий авторизованный пользователь
+                let viewingUserId = null; // Какой профиль просматриваем (null - свой)
+                let posts = [];
+                let photos = [];
+                
+                // Генерация ID при регистрации
+                  // Генерация ID при регистрации
+function generateUserId() {
+    return '@' + Math.floor(10000000 + Math.random() * 90000000); // Пример: @12345678
+  }
+  
+  // Инициализация профиля
+  function initProfile() {
+    // Загрузка данных
+    const savedUser = localStorage.getItem('userData');
+    
+    if (!savedUser) {
+      // Создаем нового пользователя
+      currentUser = {
+        id: generateUserId(), // Генерируем новый ID
+        name: 'Новый пользователь',
+        // ... остальные поля по умолчанию
+      };
+      saveUserData();
+    } else {
+      currentUser = JSON.parse(savedUser);
+    }
+  
+    // Обновляем ID в интерфейсе
+    document.getElementById('profile-id').textContent = currentUser.id;
+    
+    // Остальная инициализация...
+    loadPosts();
+    loadPhotos();
+    updateProfileUI();
+    // ...
+  }
+                // Поиск пользователя по ID
+                function findUserById(userId) {
+                  return users.find(user => user.id === userId);
+                }
+                
+                // Проверка - свой ли это профиль
+                function isMyProfile() {
+                  return !viewingUserId || viewingUserId === currentUser.id;
+                }
+                
+                // Инициализация профиля
+                function initProfile() {
+                  // Парсим URL для определения чей профиль смотрим
+                  const path = window.location.pathname;
+                  const match = path.match(/\/profile\/(@\d+)/);
+                  viewingUserId = match ? match[1] : currentUser.id;
+                
+                  // Загрузка данных
+                  loadUserData();
+                  loadPosts();
+                  loadPhotos();
+                
+                  // Обновление интерфейса
+                  updateProfileUI();
+                  renderPosts();
+                  renderPhotos();
+                  initEventHandlers();
+                }
+                
+                // Обновление интерфейса профиля
+                function updateProfileUI() {
+                  const user = viewingUserId ? findUserById(viewingUserId) : currentUser;
+                  
+                  // Основная информация
+                  document.getElementById('profile-name').textContent = user.name;
+                  document.getElementById('profile-id').textContent = user.id;
+                  document.getElementById('friends-count').textContent = user.friends.length;
+                  document.getElementById('followers-count').textContent = user.followers.length;
+                
+                  // Аватар
+                  document.getElementById('profile-avatar').src = user.avatar || 'avatar.jpg';
+                  document.getElementById('post-avatar').src = user.avatar || 'avatar.jpg';
+                
+                  // Кнопки действий
+                  if (isMyProfile()) {
+                    document.getElementById('edit-profile').style.display = 'block';
+                    document.getElementById('settings-button').style.display = 'block';
+                    document.getElementById('add-friend').style.display = 'none';
+                    document.getElementById('follow-user').style.display = 'none';
+                  } else {
+                    document.getElementById('edit-profile').style.display = 'none';
+                    document.getElementById('settings-button').style.display = 'none';
+                    document.getElementById('add-friend').style.display = 'block';
+                    document.getElementById('follow-user').style.display = 'block';
+                    
+                    // Проверяем статус дружбы/подписки
+                    const isFriend = currentUser.friends.includes(user.id);
+                    const isFollowing = currentUser.followers.includes(user.id);
+                    
+                    document.getElementById('add-friend').innerHTML = 
+                      `<i class="fas fa-user-${isFriend ? 'check' : 'plus'}"></i> ${isFriend ? 'Друзья' : 'Добавить в друзья'}`;
+                    
+                    document.getElementById('follow-user').innerHTML = 
+                      `<i class="fas fa-rss"></i> ${isFollowing ? 'Отписаться' : 'Подписаться'}`;
+                  }
+                }
+                
+                // Обработчики событий
+                function initEventHandlers() {
+                  // Поиск пользователя
+                  document.getElementById('search-btn').addEventListener('click', () => {
+                    const searchInput = document.getElementById('user-search').value.trim();
+                    if (searchInput.startsWith('@')) {
+                      const user = findUserById(searchInput);
+                      if (user) {
+                        window.location.href = `/profile/${user.id}`;
+                      } else {
+                        alert('Пользователь не найден!');
+                      }
+                    }
+                  });
+                
+                  // Добавление в друзья
+                  document.getElementById('add-friend').addEventListener('click', () => {
+                    const targetUser = findUserById(viewingUserId);
+                    const isFriend = currentUser.friends.includes(targetUser.id);
+                
+                    if (isFriend) {
+                      // Удаляем из друзей
+                      currentUser.friends = currentUser.friends.filter(id => id !== targetUser.id);
+                      targetUser.friends = targetUser.friends.filter(id => id !== currentUser.id);
+                    } else {
+                      // Добавляем в друзья
+                      currentUser.friends.push(targetUser.id);
+                      targetUser.friends.push(currentUser.id);
+                    }
+                    
+                    updateProfileUI();
+                    showNotification(isFriend ? 'Удалено из друзей' : 'Добавлено в друзья');
+                  });
+                
+                  // Подписка
+                  document.getElementById('follow-user').addEventListener('click', () => {
+                    const targetUser = findUserById(viewingUserId);
+                    const isFollowing = targetUser.followers.includes(currentUser.id);
+                
+                    if (isFollowing) {
+                      // Отписываемся
+                      targetUser.followers = targetUser.followers.filter(id => id !== currentUser.id);
+                    } else {
+                      // Подписываемся
+                      targetUser.followers.push(currentUser.id);
+                    }
+                    
+                    updateProfileUI();
+                    showNotification(isFollowing ? 'Вы отписались' : 'Вы подписались');
+                  });
+                
+                  // Остальные обработчики...
+                  // ... (сохраняем все предыдущие обработчики из вашего кода)
+                }
+                
+                // Инициализация при загрузке страницы
+                document.addEventListener('DOMContentLoaded', initProfile);
+            
+            // Инициализация профиля
+            function initProfile() {
+                // Загрузка данных из localStorage
+                loadUserData();
+                loadPosts();
+                loadPhotos();
+                
+                // Обновление интерфейса
+                updateProfileUI();
+                renderPosts();
+                renderPhotos();
+                
+                // Инициализация обработчиков событий
+                initEventHandlers();
+            }
+            
+            // Загрузка данных пользователя
+            function loadUserData() {
+                const savedUser = localStorage.getItem('userData');
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    userId = currentUser.id || userId;
+                } else {
+                    currentUser.id = userId;
+                    saveUserData();
+                }
+            }
+            
+            // Загрузка постов
+            function loadPosts() {
+                const savedPosts = localStorage.getItem('userPosts');
+                posts = savedPosts ? JSON.parse(savedPosts) : [];
+            }
+            
+            // Загрузка фотографий
+            function loadPhotos() {
+                const savedPhotos = localStorage.getItem('userPhotos');
+                photos = savedPhotos ? JSON.parse(savedPhotos) : [];
+                currentUser.photos = photos.length;
+            }
+            
+            // Сохранение данных пользователя
+            function saveUserData() {
+                localStorage.setItem('userData', JSON.stringify(currentUser));
+            }
+            
+            // Сохранение постов
+            function savePosts() {
+                localStorage.setItem('userPosts', JSON.stringify(posts));
+            }
+            
+            // Сохранение фотографий
+            function savePhotos() {
+                localStorage.setItem('userPhotos', JSON.stringify(photos));
+                currentUser.photos = photos.length;
+                saveUserData();
+            }
+            
+            // Обновление интерфейса профиля
+            function updateProfileUI() {
+                // Основная информация
+                document.getElementById('profile-name').textContent = currentUser.name;
+                document.getElementById('birthday').textContent = currentUser.birthday;
+                document.getElementById('city').textContent = currentUser.city;
+                document.getElementById('education').textContent = currentUser.education;
+                document.getElementById('job').textContent = currentUser.job;
+                document.getElementById('relationship').textContent = currentUser.relationship;
+                
+                // Аватар и обложка
+                if (currentUser.avatar) {
+                    document.getElementById('profile-avatar').src = currentUser.avatar;
+                    document.getElementById('post-avatar').src = currentUser.avatar;
+                }
+                if (currentUser.cover) {
+                    document.getElementById('cover-photo').style.backgroundImage = `url(${currentUser.cover})`;
+                }
+                
+                // Интересы
+                updateInterestsUI();
+                
+                // Статистика
+                document.getElementById('friends-count').textContent = currentUser.friends;
+                document.getElementById('followers-count').textContent = currentUser.followers;
+                document.getElementById('photos-count').textContent = currentUser.photos;
+            }
+            
+            // Обновление списка интересов
+            function updateInterestsUI() {
+                const interestsContainer = document.getElementById('interests-tags');
+                interestsContainer.innerHTML = '';
+                
+                currentUser.interests.forEach(interest => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = interest;
+                    tag.innerHTML += '<span class="remove-tag">&times;</span>';
+                    tag.querySelector('.remove-tag').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        removeInterest(interest);
+                    });
+                    interestsContainer.appendChild(tag);
+                });
+            }
+            
+            // Отображение постов
+            function renderPosts() {
+                const postsContainer = document.getElementById('posts-container');
+                postsContainer.innerHTML = '';
+                
+                if (posts.length === 0) {
+                    postsContainer.innerHTML = `
+                        <div class="no-content">
+                            <i class="fas fa-newspaper"></i>
+                            <p>У вас пока нет постов</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                posts.forEach(post => {
+                    const postElement = createPostElement(post);
+                    postsContainer.appendChild(postElement);
+                });
+            }
+            
+            // Создание элемента поста
+            function createPostElement(post) {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.dataset.id = post.id;
+                
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <img src="${post.avatar || currentUser.avatar || 'avatar.jpg'}" alt="Аватар" class="post-avatar">
+                        <div class="post-author">
+                            <h4>${currentUser.name}</h4>
+                            <span class="post-time">${post.time}</span>
+                        </div>
+                        <div class="post-settings">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>${post.text}</p>
+                        ${post.photo ? `<div class="post-media"><img src="${post.photo}" alt="Фото поста"></div>` : ''}
+                    </div>
+                    <div class="post-footer">
+                        <button class="post-like"><i class="far fa-heart"></i> <span>${post.likes || 0}</span></button>
+                        <button class="post-comment"><i class="far fa-comment"></i> <span>${post.comments || 0}</span></button>
+                        <button class="post-share"><i class="fas fa-share"></i> Поделиться</button>
+                    </div>
+                `;
+                
+                // Обработчик удаления поста
+                postElement.querySelector('.post-settings').addEventListener('click', () => {
+                    showPostActionsMenu(post.id);
+                });
+                
+                // Обработчик лайков
+                postElement.querySelector('.post-like').addEventListener('click', function() {
+                    const likeCount = this.querySelector('span');
+                    const currentLikes = parseInt(likeCount.textContent);
+                    
+                    if (this.classList.contains('liked')) {
+                        likeCount.textContent = currentLikes - 1;
+                        this.classList.remove('liked');
+                        this.innerHTML = `<i class="far fa-heart"></i> <span>${currentLikes - 1}</span>`;
+                    } else {
+                        likeCount.textContent = currentLikes + 1;
+                        this.classList.add('liked');
+                        this.innerHTML = `<i class="fas fa-heart"></i> <span>${currentLikes + 1}</span>`;
+                    }
+                    
+                    // Обновляем данные поста
+                    const postIndex = posts.findIndex(p => p.id === post.id);
+                    if (postIndex !== -1) {
+                        posts[postIndex].likes = parseInt(likeCount.textContent);
+                        savePosts();
+                    }
+                });
+                
+                return postElement;
+            }
+            
+            // Отображение фотографий
+            function renderPhotos() {
+                const photosGrid = document.getElementById('photos-grid');
+                photosGrid.innerHTML = '';
+                
+                if (photos.length === 0) {
+                    photosGrid.innerHTML = `
+                        <div class="no-content">
+                            <i class="fas fa-camera"></i>
+                            <p>Фотографий пока нет</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Показываем первые 6 фото
+                const photosToShow = photos.slice(0, 6);
+                photosToShow.forEach(photo => {
+                    const img = document.createElement('img');
+                    img.src = photo;
+                    img.alt = 'Фото пользователя';
+                    photosGrid.appendChild(img);
+                });
+            }
+            
+            // Добавление нового поста
+            function addPost(text, photo = null) {
+                const newPost = {
+                    id: 'post-' + Date.now(),
+                    text: text,
+                    photo: photo,
+                    time: 'Только что',
+                    likes: 0,
+                    comments: 0,
+                    avatar: currentUser.avatar || 'avatar.jpg'
+                };
+                
+                posts.unshift(newPost);
+                savePosts();
+                renderPosts();
+                
+                if (photo) {
+                    addPhoto(photo);
+                }
+                
+                // Очищаем поле ввода
+                document.getElementById('post-input').value = '';
+                document.getElementById('submit-post-btn').disabled = true;
+            }
+            
+            // Добавление фотографии
+            function addPhoto(photoUrl) {
+                if (!photos.includes(photoUrl)) {
+                    photos.unshift(photoUrl);
+                    savePhotos();
+                    renderPhotos();
+                    updateProfileUI();
+                }
+            }
+            
+            // Добавление интереса
+            function addInterest(interest) {
+                interest = interest.trim();
+                if (interest && !currentUser.interests.includes(interest)) {
+                    currentUser.interests.push(interest);
+                    saveUserData();
+                    updateInterestsUI();
+                    showNotification('Интерес добавлен');
+                }
+            }
+            
+            // Удаление интереса
+            function removeInterest(interest) {
+                currentUser.interests = currentUser.interests.filter(i => i !== interest);
+                saveUserData();
+                updateInterestsUI();
+                showNotification('Интерес удален');
+            }
+            
+            // Загрузка изображения
+            function uploadImage(input, callback) {
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        callback(e.target.result);
+                    };
+                    
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            
+            // Загрузка нескольких изображений
+            function uploadMultipleImages(input, callback) {
+                if (input.files && input.files.length > 0) {
+                    const files = Array.from(input.files);
+                    let uploadedCount = 0;
+                    
+                    files.forEach(file => {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            callback(e.target.result);
+                            uploadedCount++;
+                            
+                            if (uploadedCount === files.length) {
+                                showNotification(`Загружено ${uploadedCount} фото`);
+                            }
+                        };
+                        
+                        reader.readAsDataURL(file);
+                    });
+                }
+            }
+            
+            // Показать меню действий с постом
+            function showPostActionsMenu(postId) {
+                // В реальном приложении здесь можно использовать контекстное меню
+                if (confirm('Вы действительно хотите удалить этот пост?')) {
+                    posts = posts.filter(p => p.id !== postId);
+                    savePosts();
+                    renderPosts();
+                    showNotification('Пост удален');
+                }
+            }
+            
+            // Показать уведомление
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }, 3000);
+            }
+            
+            // Инициализация обработчиков событий
+            function initEventHandlers() {
+                // Редактирование профиля
+                document.getElementById('edit-profile').addEventListener('click', showEditProfileModal);
+                
+                // Настройки профиля
+                document.getElementById('settings-button').addEventListener('click', showSettingsModal);
+                
+                // Редактирование информации
+                document.getElementById('edit-info-btn').addEventListener('click', showInfoModal);
+                
+                // Добавление интересов
+                document.getElementById('add-interest-btn').addEventListener('click', showInterestModal);
+                
+                // Создание поста
+                document.getElementById('post-input').addEventListener('input', togglePostButton);
+                document.getElementById('submit-post-btn').addEventListener('click', submitPost);
+                document.getElementById('post-input').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && document.getElementById('post-input').value.trim()) {
+                        submitPost();
+                    }
+                });
+                
+                // Загрузка аватарки
+                document.getElementById('edit-avatar').addEventListener('click', () => {
+                    document.getElementById('avatar-upload').click();
+                });
+                document.getElementById('avatar-upload').addEventListener('change', (e) => {
+                    uploadImage(e.target, (imageUrl) => {
+                        document.getElementById('profile-avatar').src = imageUrl;
+                        document.getElementById('post-avatar').src = imageUrl;
+                        currentUser.avatar = imageUrl;
+                        saveUserData();
+                        showNotification('Аватар обновлен');
+                    });
+                });
+                
+                // Загрузка обложки
+                document.getElementById('edit-cover').addEventListener('click', () => {
+                    document.getElementById('cover-upload').click();
+                });
+                document.getElementById('cover-upload').addEventListener('change', (e) => {
+                    uploadImage(e.target, (imageUrl) => {
+                        document.getElementById('cover-photo').style.backgroundImage = `url(${imageUrl})`;
+                        currentUser.cover = imageUrl;
+                        saveUserData();
+                        showNotification('Обложка обновлена');
+                    });
+                });
+                
+                // Добавление фото к посту
+                document.getElementById('add-photo-btn').addEventListener('click', () => {
+                    document.getElementById('photo-upload').click();
+                });
+                document.getElementById('photo-upload').addEventListener('change', (e) => {
+                    uploadMultipleImages(e.target, (imageUrl) => {
+                        const postText = document.getElementById('post-input').value || 'Новое фото';
+                        addPost(postText, imageUrl);
+                    });
+                });
+                
+                // Просмотр всех фото
+                document.getElementById('view-all-photos').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('В реальном приложении здесь бы открылась галерея всех фотографий.');
+                });
+                
+                // Закрытие модальных окон
+                document.querySelectorAll('.close, .cancel-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.modal').forEach(modal => {
+                            modal.style.display = 'none';
+                        });
+                    });
+                });
+                
+                // Клик вне модального окна закрывает его
+                window.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        e.target.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Показать модальное окно редактирования профиля
+            function showEditProfileModal() {
+                const modal = document.getElementById('info-modal');
+                modal.style.display = 'block';
+                
+                // Заполняем форму текущими данными
+                document.getElementById('edit-name').value = currentUser.name;
+                document.getElementById('edit-city').value = currentUser.city;
+                document.getElementById('edit-job').value = currentUser.job;
+                document.getElementById('edit-education').value = currentUser.education;
+                document.getElementById('edit-relationship').value = currentUser.relationship;
+                
+                // Преобразуем дату рождения в формат для input[type=date]
+                if (currentUser.birthday) {
+                    const dateParts = currentUser.birthday.split(' ');
+                    if (dateParts.length === 3) {
+                        const months = {
+                            'января': '01', 'февраля': '02', 'марта': '03', 'апреля': '04',
+                            'мая': '05', 'июня': '06', 'июля': '07', 'августа': '08',
+                            'сентября': '09', 'октября': '10', 'ноября': '11', 'декабря': '12'
+                        };
+                        const day = dateParts[0].padStart(2, '0');
+                        const month = months[dateParts[1]];
+                        const year = dateParts[2];
+                        document.getElementById('edit-birthday').value = `${year}-${month}-${day}`;
+                    }
+                }
+                
+                // Обработчик сохранения
+                document.getElementById('info-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    saveProfileInfo();
+                };
+            }
+            
+            // Показать модальное окно информации
+            function showInfoModal() {
+                showEditProfileModal(); // Используем то же самое окно
+            }
+            
+            // Показать модальное окно настроек
+            function showSettingsModal() {
+                const modal = document.getElementById('settings-modal');
+                modal.style.display = 'block';
+                
+                // Заполняем форму текущими данными
+                document.getElementById('settings-email').value = currentUser.email || '';
+                document.getElementById('settings-visibility').value = currentUser.visibility || 'public';
+                
+                // Обработчик сохранения
+                document.getElementById('settings-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    saveSettings();
+                };
+            }
+            
+            // Показать модальное окно добавления интересов
+            function showInterestModal() {
+                const modal = document.getElementById('interest-modal');
+                modal.style.display = 'block';
+                document.getElementById('new-interest').value = '';
+                
+                // Обработчик сохранения
+                document.getElementById('interest-form').onsubmit = function(e) {
+                    e.preventDefault();
+                    const interest = document.getElementById('new-interest').value.trim();
+                    if (interest) {
+                        addInterest(interest);
+                        modal.style.display = 'none';
+                    }
+                };
+            }
+            
+            // Сохранение информации профиля
+            function saveProfileInfo() {
+                // Обновляем данные пользователя
+                currentUser.name = document.getElementById('edit-name').value;
+                currentUser.city = document.getElementById('edit-city').value;
+                currentUser.job = document.getElementById('edit-job').value;
+                currentUser.education = document.getElementById('edit-education').value;
+                currentUser.relationship = document.getElementById('edit-relationship').value;
+                
+                // Форматируем дату рождения
+                const birthdayDate = new Date(document.getElementById('edit-birthday').value);
+                if (!isNaN(birthdayDate.getTime())) {
+                    const months = [
+                        'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+                        'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+                    ];
+                    const day = birthdayDate.getDate();
+                    const month = months[birthdayDate.getMonth()];
+                    const year = birthdayDate.getFullYear();
+                    currentUser.birthday = `${day} ${month} ${year}`;
+                }
+                
+                saveUserData();
+                updateProfileUI();
+                document.getElementById('info-modal').style.display = 'none';
+                showNotification('Информация сохранена');
+            }
+            
+            // Сохранение настроек
+            function saveSettings() {
+                const email = document.getElementById('settings-email').value;
+                const newPassword = document.getElementById('settings-password').value;
+                const confirmPassword = document.getElementById('settings-confirm-password').value;
+                const visibility = document.getElementById('settings-visibility').value;
+                
+                if (newPassword && newPassword !== confirmPassword) {
+                    showNotification('Пароли не совпадают');
+                    return;
+                }
+                
+                currentUser.email = email;
+                currentUser.visibility = visibility;
+                
+                if (newPassword) {
+                    currentUser.password = newPassword;
+                }
+                
+                saveUserData();
+                document.getElementById('settings-modal').style.display = 'none';
+                showNotification('Настройки сохранены');
+                
+                // Очищаем поля паролей
+                document.getElementById('settings-password').value = '';
+                document.getElementById('settings-confirm-password').value = '';
+            }
+            
+            // Активация/деактивация кнопки публикации поста
+            function togglePostButton() {
+                const input = document.getElementById('post-input');
+                const button = document.getElementById('submit-post-btn');
+                button.disabled = !input.value.trim();
+            }
+            
+            // Отправка поста
+            function submitPost() {
+                const postText = document.getElementById('post-input').value.trim();
+                if (postText) {
+                    addPost(postText);
+                }
+            }
+            
+            // Инициализация профиля при загрузке страницы
+            document.addEventListener('DOMContentLoaded', initProfile);
+            </script>
+        </section>
+    </section>
+
+        <!-- Секция ленты (главная, изначально активна) -->
+        <section class="content-section" id="feed-section">
+            <!-- Контент главной страницы -->
+        </section>
+
+        <!-- Секция мессенджера (изначально скрыта) -->
+        <section class="content-section" id="messenger-section" style="display: none;">
+            <!-- Контент мессенджера -->
+
+          <!-- Контент мессенджера -->
+    <div class="messenger-container">
+        <div class="messenger-sidebar">
+            <div class="search-chats">
+                <input type="text" placeholder="Поиск чатов и людей" id="searchChatsInput">
+            </div>
+            
+            <div class="chats-list" id="chatsList">
+                <!-- Чаты будут добавляться динамически -->
+            </div>
+            
+            <button class="new-chat-button" id="newChatButton">
+                <i class="fas fa-plus"></i> Новый чат
+            </button>
+        </div>
+        
+        <div class="chat-area">
+            <div class="chat-header">
+                <div class="chat-partner">
+                    <img src="" alt="Аватар" class="partner-avatar">
+                    <div class="partner-name">Выберите чат</div>
+                </div>
+                <div class="chat-actions">
+                    <button class="chat-action" id="userActionsButton" disabled>
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="messages-container" id="messagesContainer">
+                <div class="no-chat-selected">
+                    <p>Выберите чат для начала общения</p>
+                </div>
+            </div>
+            
+            <div class="message-input">
+                <input type="text" placeholder="Напишите сообщение..." id="messageInput" disabled>
+                <button class="send-button" id="sendMessageButton" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для нового чата -->
+    <div class="modal" id="newChatModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Новый чат</h3>
+                <button class="close-modal" id="closeNewChatModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" placeholder="Поиск пользователей" id="searchUsersInput">
+                <div class="users-list" id="usersList">
+                    <!-- Пользователи будут добавляться динамически -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно действий с пользователем -->
+    <div class="modal" id="userActionsModal">
+        <div class="modal-content">
+            <div class="user-actions-header">
+                <img src="" alt="Аватар" class="actions-avatar">
+                <div class="actions-user-name"></div>
+            </div>
+            <div class="user-actions-list">
+                <button class="user-action" id="viewProfileAction">
+                    <i class="fas fa-user"></i> Профиль
+                </button>
+                <button class="user-action" id="addFriendAction">
+                    <i class="fas fa-user-plus"></i> Добавить в друзья
+                </button>
+                <button class="user-action" id="blockUserAction">
+                    <i class="fas fa-ban"></i> Заблокировать
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Данные мессенджера
+    let messengerData = {
+        chats: [
+            {
+                id: 1,
+                userId: 101,
+                name: "Иван Иванов",
+                avatar: "user1.jpg",
+                lastMessage: "Привет, как дела?",
+                time: "12:30",
+                messages: [
+                    {
+                        text: "Привет, как дела?",
+                        time: "12:30",
+                        sent: false
+                    },
+                    {
+                        text: "Привет! Все отлично, спасибо!",
+                        time: "12:32",
+                        sent: true
+                    }
+                ]
+            }
+        ],
+        users: [
+            {
+                id: 101,
+                name: "Пипидастр",
+                avatar: "user1.jpg",
+                status: "Online"
+            },
+            {
+                id: 102,
+                name: "Катя",
+                avatar: "user2.jpg",
+                status: "Online"
+            },
+            {
+                id: 103,
+                name: "Bramtiz",
+                avatar: "user3.jpg",
+                status: "Был в сети 2 часа назад"
+            }
+        ],
+        currentChat: null
+    };
+
+    // Загрузка данных из localStorage
+    function loadMessengerData() {
+        try {
+            const savedData = localStorage.getItem('freedamMessengerData');
+            if (savedData) {
+                messengerData = JSON.parse(savedData);
+                // Валидация загруженных данных
+                if (!Array.isArray(messengerData.chats)) messengerData.chats = [];
+                if (!Array.isArray(messengerData.users)) messengerData.users = [];
+                updateMessenger();
+            }
+        } catch (e) {
+            console.error("Ошибка загрузки данных:", e);
+            // Восстановление данных по умолчанию при ошибке
+            messengerData = {
+                chats: messengerData.chats,
+                users: messengerData.users,
+                currentChat: null
+            };
+        }
+    }
+
+    // Сохранение данных в localStorage
+    function saveMessengerData() {
+        try {
+            localStorage.setItem('freedamMessengerData', JSON.stringify(messengerData));
+        } catch (e) {
+            console.error("Ошибка сохранения данных:", e);
+        }
+    }
+
+    // Обновление интерфейса мессенджера
+    function updateMessenger() {
+        // Обновление списка чатов
+        const chatsList = document.getElementById('chatsList');
+        chatsList.innerHTML = '';
+        
+        if (messengerData.chats.length === 0) {
+            chatsList.innerHTML = '<div class="no-chats">У вас пока нет чатов</div>';
+        } else {
+            messengerData.chats.forEach(chat => {
+                const chatItem = document.createElement('div');
+                chatItem.className = 'chat-item';
+                chatItem.dataset.chatId = chat.id;
+                chatItem.innerHTML = `
+                    <img src="${chat.avatar || 'default-avatar.jpg'}" alt="Аватар" class="chat-avatar">
+                    <div class="chat-info">
+                        <div class="chat-name">${chat.name || 'Без имени'}</div>
+                        <div class="last-message">${chat.lastMessage || ''}</div>
+                    </div>
+                    <div class="chat-time">${chat.time || ''}</div>
+                `;
+                chatsList.appendChild(chatItem);
+                
+                // Обработчик клика по чату
+                chatItem.addEventListener('click', () => openChat(chat.id));
+            });
+        }
+        
+        // Обновление текущего чата, если он открыт
+        if (messengerData.currentChat) {
+            openChat(messengerData.currentChat);
+        } else {
+            // Если чат не выбран, показываем заглушку
+            document.getElementById('messagesContainer').innerHTML = `
+                <div class="no-chat-selected">
+                    <p>Выберите чат для начала общения</p>
+                </div>
+            `;
+            document.getElementById('userActionsButton').disabled = true;
+            document.getElementById('messageInput').disabled = true;
+            document.getElementById('sendMessageButton').disabled = true;
+        }
+    }
+
+    // Открытие чата
+    function openChat(chatId) {
+        const chat = messengerData.chats.find(c => c.id === chatId);
+        if (!chat) return;
+        
+        messengerData.currentChat = chatId;
+        
+        // Обновление заголовка чата
+        document.querySelector('.chat-partner img').src = chat.avatar || 'default-avatar.jpg';
+        document.querySelector('.partner-name').textContent = chat.name || 'Без имени';
+        
+        // Обновление сообщений
+        const messagesContainer = document.getElementById('messagesContainer');
+        messagesContainer.innerHTML = '';
+        
+        if (chat.messages && chat.messages.length > 0) {
+            chat.messages.forEach(message => {
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${message.sent ? 'sent' : 'received'}`;
+                
+                if (!message.sent) {
+                    messageElement.innerHTML = `
+                        <img src="${chat.avatar || 'default-avatar.jpg'}" alt="Аватар" class="message-avatar">
+                        <div class="message-content">
+                            <div class="message-text">${message.text || ''}</div>
+                            <div class="message-time">${message.time || ''}</div>
+                        </div>
+                    `;
+                } else {
+                    messageElement.innerHTML = `
+                        <div class="message-content">
+                            <div class="message-text">${message.text || ''}</div>
+                            <div class="message-time">${message.time || ''}</div>
+                        </div>
+                    `;
+                }
+                
+                messagesContainer.appendChild(messageElement);
+            });
+        } else {
+            messagesContainer.innerHTML = `
+                <div class="no-messages">
+                    <p>Нет сообщений</p>
+                </div>
+            `;
+        }
+        
+        // Активируем кнопки и поле ввода
+        document.getElementById('userActionsButton').disabled = false;
+        document.getElementById('messageInput').disabled = false;
+        document.getElementById('sendMessageButton').disabled = false;
+        document.getElementById('messageInput').focus();
+        
+        // Прокрутка вниз
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Отправка сообщения
+    function sendMessage() {
+        const input = document.getElementById('messageInput');
+        const text = input.value.trim();
+        
+        if (text && messengerData.currentChat) {
+            const chat = messengerData.chats.find(c => c.id === messengerData.currentChat);
+            if (chat) {
+                const now = new Date();
+                const time = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                // Инициализация массива сообщений, если его нет
+                if (!Array.isArray(chat.messages)) chat.messages = [];
+                
+                // Добавление сообщения
+                chat.messages.push({
+                    text: text,
+                    time: time,
+                    sent: true
+                });
+                
+                // Обновление последнего сообщения в списке чатов
+                chat.lastMessage = text;
+                chat.time = time;
+                
+                // Очистка поля ввода
+                input.value = '';
+                
+                // Сохранение и обновление
+                saveMessengerData();
+                updateMessenger();
+            }
+        }
+    }
+
+    // Создание нового чата
+    function createNewChat(userId) {
+        const user = messengerData.users.find(u => u.id === userId);
+        if (!user) return;
+        
+        // Проверяем, есть ли уже чат с этим пользователем
+        const existingChat = messengerData.chats.find(c => c.userId === userId);
+        if (existingChat) {
+            openChat(existingChat.id);
+            return;
+        }
+        
+        // Создаем новый чат
+        const newChat = {
+            id: Date.now(), // Используем timestamp как ID
+            userId: user.id,
+            name: user.name,
+            avatar: user.avatar,
+            lastMessage: "Чат создан",
+            time: "Только что",
+            messages: []
+        };
+        
+        messengerData.chats.unshift(newChat);
+        saveMessengerData();
+        updateMessenger();
+        openChat(newChat.id);
+        
+        // Закрываем модальное окно
+        document.getElementById('newChatModal').style.display = 'none';
+    }
+
+    // Поиск пользователей
+    function searchUsers(query) {
+        const usersList = document.getElementById('usersList');
+        usersList.innerHTML = '';
+        
+        const filteredUsers = messengerData.users.filter(user => 
+            user.name && user.name.toLowerCase().includes(query.toLowerCase())
+        );
+        
+        if (filteredUsers.length === 0) {
+            usersList.innerHTML = '<div class="no-users">Пользователи не найдены</div>';
+            return;
+        }
+        
+        filteredUsers.forEach(user => {
+            const userItem = document.createElement('div');
+            userItem.className = 'user-item';
+            userItem.innerHTML = `
+                <img src="${user.avatar || 'default-avatar.jpg'}" alt="Аватар" class="user-avatar">
+                <div class="user-info">
+                    <div class="user-name">${user.name || 'Без имени'}</div>
+                    <div class="user-status">${user.status || ''}</div>
+                </div>
+                <button class="start-chat-button" data-user-id="${user.id}">Начать чат</button>
+            `;
+            usersList.appendChild(userItem);
+            
+            // Обработчик кнопки "Начать чат"
+            userItem.querySelector('.start-chat-button').addEventListener('click', () => {
+                createNewChat(user.id);
+            });
+        });
+    }
+
+    // Инициализация мессенджера
+    function initMessenger() {
+        // Загрузка данных
+        loadMessengerData();
+        
+        // Кнопка нового чата
+        document.getElementById('newChatButton').addEventListener('click', () => {
+            document.getElementById('newChatModal').style.display = 'flex';
+            document.getElementById('searchUsersInput').value = '';
+            searchUsers('');
+            document.getElementById('searchUsersInput').focus();
+        });
+        
+        // Закрытие модального окна нового чата
+        document.getElementById('closeNewChatModal').addEventListener('click', () => {
+            document.getElementById('newChatModal').style.display = 'none';
+        });
+        
+        // Поиск пользователей
+        document.getElementById('searchUsersInput').addEventListener('input', (e) => {
+            searchUsers(e.target.value);
+        });
+        
+        // Отправка сообщения
+        document.getElementById('sendMessageButton').addEventListener('click', sendMessage);
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+        
+        // Действия с пользователем
+        document.getElementById('userActionsButton').addEventListener('click', () => {
+            if (messengerData.currentChat) {
+                const chat = messengerData.chats.find(c => c.id === messengerData.currentChat);
+                if (chat) {
+                    document.querySelector('.actions-avatar').src = chat.avatar || 'default-avatar.jpg';
+                    document.querySelector('.actions-user-name').textContent = chat.name || 'Без имени';
+                    document.getElementById('userActionsModal').style.display = 'flex';
+                }
+            }
+        });
+        
+        // Действия в модальном окне пользователя
+        document.getElementById('viewProfileAction').addEventListener('click', () => {
+            alert('Переход в профиль пользователя');
+            document.getElementById('userActionsModal').style.display = 'none';
+        });
+        
+        document.getElementById('addFriendAction').addEventListener('click', () => {
+            alert('Запрос дружбы отправлен');
+            document.getElementById('userActionsModal').style.display = 'none';
+        });
+        
+        document.getElementById('blockUserAction').addEventListener('click', () => {
+            if (confirm('Вы уверены, что хотите заблокировать этого пользователя?')) {
+                alert('Пользователь заблокирован');
+                document.getElementById('userActionsModal').style.display = 'none';
+            }
+        });
+        
+        // Закрытие модальных окон при клике вне их
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+        
+        // Обработка ошибок изображений
+        document.addEventListener('error', function(e) {
+            if (e.target.tagName.toLowerCase() === 'img') {
+                e.target.src = 'default-avatar.jpg';
+            }
+        }, true);
+    }
+
+    // Инициализация при загрузке страницы
+    window.addEventListener('DOMContentLoaded', () => {
+        initMessenger();
+    });
+</script>
+
+        </section>
+
+        <!-- Секция друзей (изначально скрыта) -->
+        <section class="content-section" id="friends-section" style="display: none;">
+            <!-- Контент друзей -->
+        </section>
+
+        <!-- Секция сообществ (изначально скрыта) -->
+        <section class="content-section" id="communities-section" style="display: none;">
+            <!-- Контент сообществ -->
+        </section>
+
+        <!-- Секция фотографий (изначально скрыта) -->
+        <section class="content-section" id="photos-section" style="display: none;">
+            <!-- Контент фотографий -->
+        </section>
+
+        <!-- Секция видео (изначально скрыта) -->
+        <section class="content-section" id="videos-section" style="display: none;">
+            <!-- Контент видео -->
+        </section>
+
+        <!-- Секция игр (изначально скрыта) -->
+        <section class="content-section" id="games-section" style="display: none;">
+            <!-- Ваш существующий код игр -->
+            <section class="games-section" id="games-section">
+                <h2 class="section-title">Игры</h2>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-icon-container">
+                            <img src="icon-80.png" alt="Game Icon" class="game-icon">
+                        </div>
+                        <div class="game-info">
+                            <div class="game-title">Угадай исполнителя</div>
+                            <a href="play-main.html" class="play-button">Играть</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-icon-container">
+                            <img src="icon-82.png" alt="Game Icon" class="game-icon">
+                        </div>
+                        <div class="game-info">
+                            <div class="game-title">Бутылочка</div>
+                            <a href="#" class="play-button">Играть</a>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <div class="game-icon-container">
+                            <img src="icon-81.png" alt="Game Icon" class="game-icon">
+                        </div>
+                        <div class="game-info">
+                            <div class="game-title">Шахматы</div>
+                            <a href="#" class="play-button">Играть</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+    <script>
+        // Создание эффекта частиц
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 30 : 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Случайные параметры
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                const opacity = Math.random() * 0.5 + 0.1;
+                
+                // Применяем стили
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                particle.style.opacity = opacity;
+                particle.style.backgroundColor = `rgba(${Math.floor(Math.random() * 156 + 100)}, ${Math.floor(Math.random() * 100)}, ${Math.floor(Math.random() * 256)}, ${opacity})`;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Навигация между разделами
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Удаляем активный класс у всех элементов
+                    navItems.forEach(navItem => {
+                        navItem.classList.remove('active');
+                    });
+                    
+                    // Добавляем активный класс текущему элементу
+                    this.classList.add('active');
+                    
+                    // Скрываем все секции
+                    const sections = document.querySelectorAll('.content-section');
+                    sections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Показываем выбранную секцию
+                    const sectionId = this.getAttribute('data-section');
+                    const activeSection = document.getElementById(sectionId);
+                    if (activeSection) {
+                        activeSection.style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        // Инициализация мобильного меню
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navbar = document.getElementById('navbar');
+            
+            // Обработчик клика по гамбургеру
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation(); // Предотвращаем всплытие события
+                navbar.classList.toggle('active');
+                
+                // Меняем иконку
+                const icon = menuToggle.querySelector('i');
+                if (navbar.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Закрытие меню при клике вне его
+            document.addEventListener('click', function(e) {
+                if (!navbar.contains(e.target) && e.target !== menuToggle) {
+                    navbar.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Закрытие меню при выборе пункта
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navbar.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+            
+            // Обработка изменения размера экрана
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    navbar.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+
+        // Поиск
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            
+            searchInput.addEventListener('focus', () => {
+                searchResults.style.display = 'block';
+            });
+            
+            searchInput.addEventListener('blur', () => {
+                setTimeout(() => {
+                    searchResults.style.display = 'none';
+                }, 200);
+            });
+            
+            searchInput.addEventListener('input', () => {
+                // Здесь можно добавить логику поиска
+            });
+        }
+
+        // Инициализация при загрузке
+        window.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            setupNavigation();
+            setupMobileMenu();
+            setupSearch();
+            
+            // По умолчанию показываем главную страницу
+            document.getElementById('feed-section').style.display = 'block';
+        });
+
+        // Адаптация при изменении размера
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                const navbar = document.getElementById('navbar');
+                const menuToggle = document.querySelector('.menu-toggle');
+                
+                navbar.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+    <script>
+        // При загрузке главной страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем сохраненные данные профиля
+            const profile = JSON.parse(localStorage.getItem('freedamProfile'));
+            
+            if (profile) {
+                // Заполняем данные в профиле
+                document.getElementById('profile-name').textContent = profile.personalInfo.fullName;
+                document.getElementById('profile-phone').textContent = profile.personalInfo.phone;
+                document.getElementById('member-since').textContent = 
+                    new Date(profile.accountInfo.registrationDate).toLocaleDateString();
+            }
+        });
+
+        // При загрузке страницы
+const phone = JSON.parse(localStorage.getItem('freedamUserData')).phone;
+const userProfile = JSON.parse(localStorage.getItem(`freedamProfile_${phone}`));
+
+if (userProfile) {
+    // Заполняем шапку профиля
+    document.getElementById('user-fullname').textContent = userProfile.basicInfo.fullName;
+    document.getElementById('user-join-date').textContent = `На Freedam с ${userProfile.basicInfo.joinDate}`;
+    
+    // Заполняем страницу профиля
+    document.getElementById('profile-first-name').value = userProfile.basicInfo.firstName;
+    document.getElementById('profile-last-name').value = userProfile.basicInfo.lastName;
+    document.getElementById('profile-phone').value = userProfile.basicInfo.phone;
+}
+
+// Функция обновления профиля
+function updateProfile() {
+    const phone = JSON.parse(localStorage.getItem('freedamUserData')).phone;
+    const profile = JSON.parse(localStorage.getItem(`freedamProfile_${phone}`));
+    
+    profile.basicInfo.firstName = document.getElementById('profile-first-name').value;
+    profile.basicInfo.lastName = document.getElementById('profile-last-name').value;
+    profile.basicInfo.fullName = `${profile.basicInfo.firstName} ${profile.basicInfo.lastName}`;
+    
+    localStorage.setItem(`freedamProfile_${phone}`, JSON.stringify(profile));
+    
+    // Обновляем отображение
+    document.getElementById('user-fullname').textContent = profile.basicInfo.fullName;
+}
+    </script>
+
+</body>
+</html>
